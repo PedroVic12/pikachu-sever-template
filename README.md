@@ -43,7 +43,7 @@ npm create vite@latest frontend -- --template react
 
 ```bash
 cd frontend
-npm install axios recharts
+npm install axios recharts lucide-react
 ```
 
 ```bash
