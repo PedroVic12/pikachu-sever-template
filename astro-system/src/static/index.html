@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,19 +14,19 @@
             color: white;
             min-height: 100vh;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
         }
-        
+
         h1 {
             text-align: center;
             margin-bottom: 40px;
             font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
-        
+
         .section {
             background: rgba(255, 255, 255, 0.1);
             border-radius: 15px;
@@ -34,13 +35,13 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        
+
         .section h2 {
             color: #ffd700;
             margin-bottom: 20px;
             font-size: 1.8em;
         }
-        
+
         button {
             background: linear-gradient(45deg, #ff6b6b, #ee5a24);
             color: white;
@@ -51,14 +52,14 @@
             font-size: 16px;
             margin: 5px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
-        
+
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         }
-        
+
         .result {
             background: rgba(0, 0, 0, 0.2);
             border-radius: 10px;
@@ -67,25 +68,25 @@
             min-height: 100px;
             border-left: 4px solid #ffd700;
         }
-        
+
         .loading {
             text-align: center;
             font-style: italic;
             color: #ffd700;
         }
-        
+
         .error {
             color: #ff6b6b;
             font-weight: bold;
         }
-        
+
         .nasa-image {
             max-width: 100%;
             border-radius: 10px;
             margin-top: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
-        
+
         .pokemon-sprite {
             width: 150px;
             height: 150px;
@@ -94,7 +95,7 @@
             border-radius: 50%;
             padding: 10px;
         }
-        
+
         input {
             padding: 10px 15px;
             border: none;
@@ -104,7 +105,7 @@
             background: rgba(255, 255, 255, 0.9);
             color: #333;
         }
-        
+
         select {
             padding: 10px 15px;
             border: none;
@@ -114,32 +115,33 @@
             background: rgba(255, 255, 255, 0.9);
             color: #333;
         }
-        
+
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 20px;
         }
-        
+
         @media (max-width: 768px) {
             .grid {
                 grid-template-columns: 1fr;
             }
-            
+
             h1 {
                 font-size: 2em;
             }
-            
+
             .section {
                 padding: 15px;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>🌟 Sistema Astronômico 🌟</h1>
-        
+
         <div class="grid">
             <!-- Seção NASA -->
             <div class="section">
@@ -147,7 +149,7 @@
                 <button onclick="getNasaAPOD()">Obter Foto Astronômica do Dia</button>
                 <div id="nasa-result" class="result"></div>
             </div>
-            
+
             <!-- Seção Pokémon -->
             <div class="section">
                 <h2>🎮 Pokémon</h2>
@@ -156,7 +158,7 @@
                 <button onclick="getRandomPokemon()">Pokémon Aleatório</button>
                 <div id="pokemon-result" class="result"></div>
             </div>
-            
+
             <!-- Seção Horóscopo -->
             <div class="section">
                 <h2>🔮 Horóscopo</h2>
@@ -177,7 +179,7 @@
                 <button onclick="getHoroscope()">Ver Horóscopo</button>
                 <div id="horoscope-result" class="result"></div>
             </div>
-            
+
             <!-- Seção Astronomia -->
             <div class="section">
                 <h2>🌙 Astronomia</h2>
@@ -193,27 +195,27 @@
         async function makeRequest(url, resultElementId) {
             const resultElement = document.getElementById(resultElementId);
             resultElement.innerHTML = '<div class="loading">Carregando...</div>';
-            
+
             try {
                 const response = await fetch(url);
                 const data = await response.json();
-                
+
                 if (!response.ok) {
                     throw new Error(data.error || 'Erro na requisição');
                 }
-                
+
                 return data;
             } catch (error) {
                 resultElement.innerHTML = `<div class="error">Erro: ${error.message}</div>`;
                 throw error;
             }
         }
-        
+
         async function getNasaAPOD() {
             try {
                 const data = await makeRequest('/api/nasa/apod', 'nasa-result');
                 const resultElement = document.getElementById('nasa-result');
-                
+
                 resultElement.innerHTML = `
                     <h3>${data.title}</h3>
                     <p><strong>Data:</strong> ${data.date}</p>
@@ -225,18 +227,18 @@
                 console.error('Erro ao obter APOD:', error);
             }
         }
-        
+
         async function getPokemon() {
             const pokemonName = document.getElementById('pokemon-name').value.trim();
             if (!pokemonName) {
                 alert('Por favor, digite o nome de um Pokémon');
                 return;
             }
-            
+
             try {
                 const data = await makeRequest(`/api/pokemon/${pokemonName}`, 'pokemon-result');
                 const resultElement = document.getElementById('pokemon-result');
-                
+
                 resultElement.innerHTML = `
                     <h3>${data.name.charAt(0).toUpperCase() + data.name.slice(1)} (#${data.id})</h3>
                     <img src="${data.sprite}" alt="${data.name}" class="pokemon-sprite">
@@ -249,12 +251,12 @@
                 console.error('Erro ao obter Pokémon:', error);
             }
         }
-        
+
         async function getRandomPokemon() {
             try {
                 const data = await makeRequest('/api/pokemon/random', 'pokemon-result');
                 const resultElement = document.getElementById('pokemon-result');
-                
+
                 resultElement.innerHTML = `
                     <h3>${data.name.charAt(0).toUpperCase() + data.name.slice(1)} (#${data.id})</h3>
                     <img src="${data.sprite}" alt="${data.name}" class="pokemon-sprite">
@@ -267,14 +269,14 @@
                 console.error('Erro ao obter Pokémon aleatório:', error);
             }
         }
-        
+
         async function getHoroscope() {
             const sign = document.getElementById('zodiac-sign').value;
-            
+
             try {
                 const data = await makeRequest(`/api/horoscope/${sign}`, 'horoscope-result');
                 const resultElement = document.getElementById('horoscope-result');
-                
+
                 resultElement.innerHTML = `
                     <h3>Horóscopo para ${sign.charAt(0).toUpperCase() + sign.slice(1)}</h3>
                     <p><strong>Data:</strong> ${data.data.date}</p>
@@ -284,12 +286,12 @@
                 console.error('Erro ao obter horóscopo:', error);
             }
         }
-        
+
         async function getMoonPhase() {
             try {
                 const data = await makeRequest('/api/astronomy/moon-phase', 'astronomy-result');
                 const resultElement = document.getElementById('astronomy-result');
-                
+
                 resultElement.innerHTML = `
                     <h3>🌙 Fase da Lua</h3>
                     <p><strong>Fase:</strong> ${data.phase}</p>
@@ -300,12 +302,12 @@
                 console.error('Erro ao obter fase da lua:', error);
             }
         }
-        
+
         async function getISSLocation() {
             try {
                 const data = await makeRequest('/api/astronomy/iss-location', 'astronomy-result');
                 const resultElement = document.getElementById('astronomy-result');
-                
+
                 resultElement.innerHTML = `
                     <h3>🛰️ Localização da ISS</h3>
                     <p><strong>Latitude:</strong> ${data.iss_position.latitude}°</p>
@@ -316,16 +318,16 @@
                 console.error('Erro ao obter localização da ISS:', error);
             }
         }
-        
+
         async function getPeopleInSpace() {
             try {
                 const data = await makeRequest('/api/astronomy/people-in-space', 'astronomy-result');
                 const resultElement = document.getElementById('astronomy-result');
-                
-                const peopleList = data.people.map(person => 
+
+                const peopleList = data.people.map(person =>
                     `<li><strong>${person.name}</strong> - ${person.craft}</li>`
                 ).join('');
-                
+
                 resultElement.innerHTML = `
                     <h3>👨‍🚀 Pessoas no Espaço</h3>
                     <p><strong>Total:</strong> ${data.number} pessoas</p>
@@ -337,4 +339,5 @@
         }
     </script>
 </body>
+
 </html>
