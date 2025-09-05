@@ -3,6 +3,14 @@
 Aplicação Completa: Flask (MVC/API) + React (Vite) + SQLite
 Este guia detalha a criação de uma aplicação "Todo List" completa, seguindo as melhores práticas para integrar um backend Python/Flask com um frontend moderno em React/Vite.
 
+
+
+   pedrov12  ~/Documentos/GitHub/pikachu-sever-template/api    main   2  23:36:57
+
+❯ mkdir -p src/api src/backend/controllers src/database src/templates src/static/css src/static/js src/static/components && touch src/api/routes.py src/backend/controllers/__init__.py src/database/models.py src/templates/index.html requirements.txt
+
+
+
 Visão Geral da Arquitetura
 
 ## Backend (Flask):
